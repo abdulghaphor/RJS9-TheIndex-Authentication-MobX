@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import authStore from "./stores/AuthStore";
+import { observer } from "mobx-react";
 // Logo
 import logo from "./assets/theindex.svg";
 
@@ -15,9 +16,25 @@ const Sidebar = () => {
         <h4 className="menu-item">
           <NavLink to="/books">BOOKS</NavLink>
         </h4>
+        {authStore.user ? (
+          <h4 className="menu-item">
+            <NavLink onClick={authStore.logout} to="#">
+              LOGOUT
+            </NavLink>
+          </h4>
+        ) : (
+          <div>
+            <h4 className="menu-item">
+              <NavLink to="/login">LOGIN</NavLink>
+            </h4>
+            <h4 className="menu-item">
+              <NavLink to="/signup">SIGNUP</NavLink>
+            </h4>
+          </div>
+        )}
       </section>
     </div>
   );
 };
 
-export default Sidebar;
+export default observer(Sidebar);

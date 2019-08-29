@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import authStore from "../stores/AuthStore";
+import { observer } from "mobx-react";
 
 class Login extends Component {
   state = {
@@ -10,10 +12,14 @@ class Login extends Component {
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
+  componentDidMount() {
+    if (authStore.user) {
+      this.props.history.push("/");
+    }
+  }
   handleSubmit = event => {
     event.preventDefault();
-    alert("I DON'T WORK YET");
+    authStore.login(this.state, this.props.history);
   };
 
   render() {
@@ -62,4 +68,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default observer(Login);
